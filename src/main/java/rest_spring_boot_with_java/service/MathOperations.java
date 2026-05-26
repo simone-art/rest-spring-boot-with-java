@@ -8,35 +8,30 @@ import rest_spring_boot_with_java.exception.UnsupportedMathOperationException;
 public class MathOperations {
 
 
-    public Double sum (@PathVariable("numberOne") String numberOne,
-                       @PathVariable("numberTwo") String numberTwo){
+    public Double sum ( String numberOne, String numberTwo){
         if(!isNumeric(numberOne) || !isNumeric(numberTwo)) throw new UnsupportedMathOperationException("Please set a numeric value");
         return convertToDouble(numberOne) + convertToDouble((numberTwo));
     }
 
     // subtraction
 
-    public Double subtraction (@PathVariable("numberOne") String numberOne,
-                               @PathVariable("numberTwo") String numberTwo){
+    public Double subtraction (String numberOne, String numberTwo){
         if(!isNumeric(numberOne) || !isNumeric(numberTwo)) throw new UnsupportedMathOperationException("Please set a numeric value");
         return convertToDouble(numberOne) - convertToDouble((numberTwo));
     }
 
     // multiplication
-    public Double multiplication (@PathVariable("numberOne") String numberOne,
-                                  @PathVariable("numberTwo") String numberTwo){
+    public Double multiplication (String numberOne, String numberTwo){
         if(!isNumeric(numberOne) || !isNumeric(numberTwo)) throw new UnsupportedMathOperationException("Please set a numeric value");
         return convertToDouble(numberOne) * convertToDouble((numberTwo));
     }
 
     // division
-    public Double division (@PathVariable("numberOne") String numberOne,
-                            @PathVariable("numberTwo") String numberTwo){
+    public Double division (String numberOne, String numberTwo){
         if(!isNumeric(numberOne) || !isNumeric(numberTwo)) throw new UnsupportedMathOperationException("Please set a numeric value");
         return convertToDouble(numberOne) / convertToDouble((numberTwo));
     }
-
-
+    
 
     private Double convertToDouble(String strNumber) throws IllegalArgumentException{
         if (strNumber == null || strNumber.isEmpty()) throw new UnsupportedMathOperationException("Please set a numeric value");
