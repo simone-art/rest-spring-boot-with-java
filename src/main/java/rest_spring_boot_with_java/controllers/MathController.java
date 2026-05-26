@@ -28,6 +28,34 @@ public class MathController {
         return convertToDouble(numberOne) + convertToDouble((numberTwo));
     }
 
+    // subtraction
+
+    @RequestMapping("/subtraction/{numberOne}/{numberTwo}")
+    public Double subtraction (@PathVariable("numberOne") String numberOne,
+                       @PathVariable("numberTwo") String numberTwo){
+        if(!isNumeric(numberOne) || !isNumeric(numberTwo)) throw new UnsupportedMathOperationException("Please set a numeric value");
+        return convertToDouble(numberOne) - convertToDouble((numberTwo));
+    }
+
+
+    // multiplication
+
+    @RequestMapping("/multiplication/{numberOne}/{numberTwo}")
+    public Double multiplication (@PathVariable("numberOne") String numberOne,
+                               @PathVariable("numberTwo") String numberTwo){
+        if(!isNumeric(numberOne) || !isNumeric(numberTwo)) throw new UnsupportedMathOperationException("Please set a numeric value");
+        return convertToDouble(numberOne) * convertToDouble((numberTwo));
+    }
+
+    // division
+
+    @RequestMapping("/division/{numberOne}/{numberTwo}")
+    public Double division (@PathVariable("numberOne") String numberOne,
+                               @PathVariable("numberTwo") String numberTwo){
+        if(!isNumeric(numberOne) || !isNumeric(numberTwo)) throw new UnsupportedMathOperationException("Please set a numeric value");
+        return convertToDouble(numberOne) / convertToDouble((numberTwo));
+    }
+
     private Double convertToDouble(String strNumber) throws IllegalArgumentException{
         if (strNumber == null || strNumber.isEmpty()) throw new UnsupportedMathOperationException("Please set a numeric value");
         String number = strNumber.replace(",", ".");
