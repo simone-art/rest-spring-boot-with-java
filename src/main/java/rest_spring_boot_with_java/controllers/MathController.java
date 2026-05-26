@@ -21,8 +21,21 @@ public class MathController {
 
 
     @RequestMapping("/sum/{numberOne}/{numberTwo}")
-    public Double sum (@PathVariable("numberOne") Double numberOne,
-                       @PathVariable("numberTwo") Double numberTwo){
-        return numberOne + numberTwo;
+    public Double sum (@PathVariable("numberOne") String numberOne,
+                       @PathVariable("numberTwo") String numberTwo){
+        if(!isNumeric(numberOne) || !isNumeric(numberTwo)) throw new IllegalArgumentException("Please set a numeric value");
+        return convertToDouble(numberOne) + convertToDouble((numberTwo));
+    }
+
+    private Double convertToDouble(String strNumber) throws IllegalArgumentException{
+        if (strNumber == null || strNumber.isEmpty()) throw new IllegalArgumentException("Please set a numeric value");
+        String number = strNumber.replace(",", ".");
+        return Double.parseDouble(number);
+    }
+
+    private boolean isNumeric(String strNumber){
+        if (strNumber == null || strNumber.isEmpty()) return false;
+        String number = strNumber.replace(",", ".");
+        return number.matches("-?\\d+(\\.\\d+)?");
     }
 }
