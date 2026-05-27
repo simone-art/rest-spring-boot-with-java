@@ -1,7 +1,6 @@
 package rest_spring_boot_with_java.service;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import rest_spring_boot_with_java.exception.UnsupportedMathOperationException;
 
 @Service
@@ -31,7 +30,7 @@ public class MathOperations {
         if(!isNumeric(numberOne) || !isNumeric(numberTwo)) throw new UnsupportedMathOperationException("Please set a numeric value");
         return convertToDouble(numberOne) / convertToDouble((numberTwo));
     }
-    
+
 
     private Double convertToDouble(String strNumber) throws IllegalArgumentException{
         if (strNumber == null || strNumber.isEmpty()) throw new UnsupportedMathOperationException("Please set a numeric value");
