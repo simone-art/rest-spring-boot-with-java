@@ -46,4 +46,19 @@ public class PersonService {
         person.setGender("Male");
         return person;
     }
+
+    public Person create(Person person){
+        logger.info("Creating one person!");
+        return person;
+    }
+
+    public Person update(Person person){
+        logger.info("Update one person!");
+        return person;
+    }
+
+    public String delete(String id){
+        logger.info("Deleting one person!");
+        return " Person was deleted with success!";
+    }
 }
