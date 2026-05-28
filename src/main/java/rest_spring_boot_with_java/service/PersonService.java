@@ -1,8 +1,10 @@
 package rest_spring_boot_with_java.service;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rest_spring_boot_with_java.model.Person;
+import rest_spring_boot_with_java.repository.PersonRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,50 +17,46 @@ public class PersonService {
     private final AtomicLong counter = new AtomicLong();
     private Logger logger = Logger.getLogger(PersonService.class.getName());
 
+    private final PersonRepository personRepository;
+
+    public PersonService(PersonRepository personRepository) {
+        this.personRepository = personRepository;
+    }
+
+
     public List<Person> findAll(){
-        List<Person> personList = new ArrayList<>();
-        for(int i = 0; i < 8; i++){
-            Person person = mockPerson(i);
-            personList.add(person);
-
-        }
-        return personList;
+        return personRepository.findAll();
     }
 
-    private Person mockPerson(int i) {
-        Person person = new Person();
-        person.setId(counter.incrementAndGet());
-        person.setFirstName("Fistname " + i);
-        person.setLastName("Lastname " + i);
-        person.setAddress("Uberlandia - Minas Gerais, Brazil" + i);
-        person.setGender("Male");
-        return person;
-    }
 
-    public Person findById (String id){
+    public Person findById (Long id){
         logger.info("Finding one person!");
-
-        Person person = new Person();
-        person.setId(counter.incrementAndGet());
-        person.setFirstName("Leandro");
-        person.setLastName("Costa");
-        person.setAddress("Uberlandia - Minas Gerais, Brazil");
-        person.setGender("Male");
-        return person;
+        return personRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Person not found with id: " + id));
     }
 
     public Person create(Person person){
         logger.info("Creating one person!");
-        return person;
+        return personRepository.save(person);
     }
 
-    public Person update(Person person){
+    public Person update(Long id, Person person){
         logger.info("Update one person!");
-        return person;
+        Person entity = personRepository.findById(person.getId())
+                .orElseThrow(() -> new RuntimeException("Person not found with id: " + person.getId()));
+
+        entity.setId(id);
+        entity.setFirstName(person.getFirstName());
+        entity.setLastName(person.getLastName());
+        entity.setAddress(person.getAddress());
+        entity.setGender(person.getGender());
+        return personRepository.save(person);
     }
 
-    public String delete(String id){
+    public void delete(Long id){
         logger.info("Deleting one person!");
-        return " Person was deleted with success!";
+        Person entity = personRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Person not found with id: " + id));
+        personRepository.delete(entity);
     }
 }
